@@ -1,34 +1,36 @@
-# 그림 랩 (Geurim Lab) 🎨
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-미술 입시생을 위한 온라인 포트폴리오 & 피드백 플랫폼
----
+## Getting Started
 
-## 🔗 배포 링크 (Live Demo)
+First, run the development server:
 
----
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-## 📖 프로젝트 소개 (About the Project)
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-**"내 그림, 이대로 괜찮을까?"**
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-**그림 랩**은 수많은 미술 입시생들이 느끼는 정보의 비대칭성과 피드백의 한계를 해결하기 위해 시작되었습니다. 소속 학원의 제한된 평가에서 벗어나, 검증된 선배(미대 재학생) 및 전문가(강사)들로부터 자신의 작품에 대한 객관적이고 다각적인 피드백을 받을 수 있는 온라인 커뮤니티입니다.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-학생들은 자신의 작품을 포트폴리오로 쌓아나가며 성장을 기록하고, 멘토들은 자신의 경험과 지식을 바탕으로 후배들에게 실질적인 도움을 주며 연결될 수 있습니다.
+## Learn More
 
-## ✨ 주요 기능 (Key Features)
+To learn more about Next.js, take a look at the following resources:
 
--   **🎨 작품 포트폴리오 업로드:** 누구나 쉽게 자신의 작품을 이미지와 함께 업로드하여 자신만의 온라인 포트폴리오를 만들 수 있습니다.
--   **💬 다각적인 피드백 기능:** 작품 상세 페이지에서 누구나 텍스트로 의견을 남길 수 있으며, 다양한 관점의 피드백을 통해 작품의 완성도를 높일 수 있습니다.
--   **✅ 신뢰할 수 있는 멘토 인증:** 미대 재학생 또는 강사임을 증명하는 서류를 통해 '인증 멘토' 자격을 부여하여, 피드백의 신뢰성을 확보합니다.
--   **👤 역할 기반 시스템:** '학생'과 '멘토'의 역할을 명확히 구분하여, 각자의 목적에 맞는 활동을 할 수 있도록 지원합니다.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## 🛠️ 기술 스택 (Tech Stack)
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-| 구분 | 기술 |
-| :--- | :--- |
-| **Frontend** | Next.js, React, TypeScript, Tailwind CSS |
-| **Backend** | Supabase (Serverless BaaS) |
-| **Database** | Supabase Postgres DB |
-| **Authentication** | Supabase Auth |
-| **Storage** | Supabase Storage |
-| **Deployment** | Vercel |
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
