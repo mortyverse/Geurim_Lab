@@ -10,4 +10,5 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 // 3. Supabase 클라이언트를 생성하여 export함.
+// 이를 통해 다른 파일에서 "import { supabase } from 'src/lib/supabase'" 형태로 사용할 수 있음
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);

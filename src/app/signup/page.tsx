@@ -6,21 +6,26 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
 export default function SignupPage() {
-
+    // 사용자가 입력할 데이터들을 기억하는 상태 변수들
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [role, setRole] = useState("student");
+
+    // 로딩 중인지 기억하는 변수 - 버튼 비활성화를 위함
     const [loading, setLoading] = useState(false);
+
+    // 페이지 이동을 위한 도구
     const router = useRouter();
 
-
+    // "회원가입"버튼을 눌렀을 때 실행되는 함수
     const handleSubmit = async(e: React.FormEvent) => {
-        e.preventDefault();
+        e.preventDefault(); // 새로고침 되어서 날아가는 것을 방지
 
-        setLoading(true);
+        setLoading(true); // 로딩 중 상태로 변경
 
         try {
+            // 서버 통신 : supbase에 회원가입 요청
             const { data, error } = await supabase.auth.signUp({
                 email: email.trim(),
                 password: password,
