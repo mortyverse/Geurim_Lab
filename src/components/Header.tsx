@@ -12,6 +12,7 @@ export default function Header() {
     // 로그인한 사용자 정보를 기억하는 상태 변수
     // <User | null> : User 타입이거나 null일 수 있다는 의미 기본값은 null
     const [user, setUser] = useState<User | null>(null);
+    const [userRole, setUserRole] = useState<string | null>(null);
 
     // 컴포넌트가 처음 화면에 나타날 때 실행되는 로직
     useEffect(() => {
@@ -19,12 +20,38 @@ export default function Header() {
         const getUser = async () => {
             const { data: { session} } = await supabase.auth.getSession();
             setUser(session?.user ?? null);
+            
+            // 사용자가 로그인된 경우 역할 정보 조회
+            if (session?.user) {
+                const { data: userData, error } = await supabase
+                    .from('users')
+                    .select('role')
+                    .eq('id', session.user.id)
+                    .single();
+                console.log('User Role Data:', userData, 'Error:', error); // 디버깅
+                setUserRole(userData?.role ?? null);
+            } else {
+                setUserRole(null);
+            }
         };
         getUser();
 
         // 로그인/로그아웃 상태가 변경될 때마다 user 상태를 업데이트
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
             setUser(session?.user ?? null);
+            
+            // 사용자가 로그인된 경우 역할 정보 조회
+            if (session?.user) {
+                const { data: userData, error } = await supabase
+                    .from('users')
+                    .select('role')
+                    .eq('id', session.user.id)
+                    .single();
+                console.log('User Role Data (Auth Change):', userData, 'Error:', error); // 디버깅
+                setUserRole(userData?.role ?? null);
+            } else {
+                setUserRole(null);
+            }
         }); 
 
         // 컴포넌트가 사라질 때 구독 해제 (메모리 누수 방지)
@@ -46,9 +73,13 @@ export default function Header() {
                     Geurim Lab
                 </Link>
                 <div className="flex items-center gap-6">
-                    {/* 좌측 메뉴: 갤러리, 포트폴리오 */}
+                    {/* 좌측 메뉴: 갤러리, 작품 업로드, 포트폴리오 */}
                     <div className="flex gap-4">
                         <Link href="/gallery" className="hover:text-gray-300">갤러리</Link>
+                        {/* 학생 역할에게만 작품 업로드 메뉴 표시 */}
+                        {user && userRole === 'student' && (
+                            <Link href="/upload" className="hover:text-gray-300">작품 업로드</Link>
+                        )}
                         {/* 로그인한 사용자에게만 포트폴리오 메뉴 표시 */}
                         {user && (
                             <Link href="/portfolio" className="hover:text-gray-300">포트폴리오</Link>
