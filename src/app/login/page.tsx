@@ -6,18 +6,22 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
 export default function LoginPage() {
-
+    // 사용자가 입력할 이메일과 비밀번호를 기억하는 상태 변수들
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    // 로딩 중인지 기억하는 변수 - 버튼 비활성화를 위함
     const [loading, setLoading] = useState(false);
 
+    // 페이지 이동을 위한 도구
     const router = useRouter();
 
+    // "로그인" 버튼을 눌렀을 때 실행되는 함수
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
+        e.preventDefault(); // 새로고침 되어서 날아가는 것을 방지
+        setLoading(true); // 로딩 중 상태로 변경
 
         try {
+            // 서버 통신: Supabase에 로그인 요청
             const { data, error } = await supabase.auth.signInWithPassword({
                 email: email.trim(),
                 password: password,
@@ -28,6 +32,7 @@ export default function LoginPage() {
                 return;
             }
 
+            // 로그인 성공 시 메인 페이지로 이동
             router.push("/");
         } catch (err) {
             console.error(err);
