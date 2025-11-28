@@ -75,16 +75,9 @@ export default function UploadPage() {
     }
   };
 
-  // 업로드 제출 핸들러 (추후 구현)
+  // 업로드 제출 핸들러
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // 권한 재확인
-    if (!user || userRole !== 'student') {
-      alert('학생 계정만 작품을 업로드할 수 있습니다.');
-      router.push('/');
-      return;
-    }
 
     if (!title.trim()) {
       alert('작품 제목을 입력해주세요.');
@@ -99,8 +92,59 @@ export default function UploadPage() {
     setLoading(true);
 
     try {
-      // TODO: Supabase Storage 업로드 및 DB 저장 로직 추가
-      alert('업로드 기능은 다음 단계에서 구현됩니다.');
+      // 현재 세션 다시 확인
+      const { data: { session } } = await supabase.auth.getSession();
+      const currentUser = session?.user;
+
+      if (!currentUser) {
+        alert('로그인이 필요합니다.');
+        router.replace('/login');
+        throw new Error('User not logged in');
+      }
+
+      // 1. 이미지 파일명 생성 (timestamp_originalFileName)
+      const timestamp = Date.now();
+      const fileExt = imageFile.name.split('.').pop();
+      const fileName = `${timestamp}_${imageFile.name}`;
+
+      // 2. Supabase Storage에 이미지 업로드
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('artworks')
+        .upload(fileName, imageFile, {
+          cacheControl: '3600',
+          upsert: false
+        });
+
+      if (uploadError) {
+        alert('이미지 업로드에 실패했습니다: ' + uploadError.message);
+        throw uploadError;
+      }
+
+      // 3. 업로드된 이미지의 public URL 가져오기
+      const { data: urlData } = supabase.storage
+        .from('artworks')
+        .getPublicUrl(fileName);
+
+      const imageUrl = urlData.publicUrl;
+
+      // 4. posts 테이블에 데이터 저장
+      const { error: dbError } = await supabase
+        .from('posts')
+        .insert({
+          title: title.trim(),
+          description: description.trim() || null,
+          image_url: imageUrl,
+          user_id: currentUser.id
+        });
+
+      if (dbError) {
+        alert('작품 정보 저장에 실패했습니다: ' + dbError.message);
+        throw dbError;
+      }
+
+      // 5. 성공 시 메인 페이지로 이동
+      alert('작품이 성공적으로 업로드되었습니다!');
+      router.push('/');
     } catch (error) {
       console.error('업로드 오류:', error);
       alert('업로드 중 오류가 발생했습니다.');
