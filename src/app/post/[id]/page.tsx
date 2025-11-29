@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import FeedbackForm from '@/components/FeedbackForm';
+import FeedbackItem from '@/components/FeedbackItem';
 
 export default async function PostDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -108,50 +109,10 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
           <div className="mt-6 space-y-4">
             {feedbacks && feedbacks.length > 0 ? (
               feedbacks.map((feedback) => (
-                <div key={feedback.id} className="border-b border-gray-200 pb-4 last:border-b-0">
-                  <div className="flex items-start gap-3">
-                    {/* 작성자 아바타 */}
-                    <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-gray-600 font-semibold">
-                        {feedback.users?.name?.charAt(0) || '?'}
-                      </span>
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      {/* 작성자 정보 */}
-                      <div className="flex items-center gap-2 mb-1">
-                        <p className="font-semibold text-gray-900 text-sm">
-                          {feedback.users?.name || '알 수 없음'}
-                        </p>
-                        
-                        {/* 인증 멘토 배지 */}
-                        {feedback.users?.is_verified && (
-                          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-800">
-                            <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                            </svg>
-                            인증 멘토
-                          </span>
-                        )}
-                      </div>
-
-                      {/* 피드백 내용 */}
-                      <p className="text-gray-700 text-sm whitespace-pre-wrap leading-relaxed mb-2">
-                        {feedback.content}
-                      </p>
-
-                      {/* 작성 시간 */}
-                      <p className="text-xs text-gray-500">
-                        {new Date(feedback.created_at).toLocaleDateString('ko-KR', {
-                          month: 'short',
-                          day: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                <FeedbackItem
+                  key={feedback.id}
+                  feedback={feedback}
+                />
               ))
             ) : (
               <p className="text-gray-500 text-sm text-center py-8">
