@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import FeedbackForm from '@/components/FeedbackForm';
 import FeedbackItem from '@/components/FeedbackItem';
+import PostActions from '@/components/PostActions';
 
 export default async function PostDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -93,6 +94,13 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
                 minute: '2-digit'
               })}
             </p>
+
+            {/* 수정/삭제 버튼 (본인 작품인 경우만 표시) */}
+            <PostActions 
+              postId={id} 
+              postUserId={post.user_id}
+              postTitle={post.title}
+            />
           </div>
         </div>
 
