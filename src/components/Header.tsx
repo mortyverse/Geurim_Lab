@@ -97,12 +97,12 @@ export default function Header() {
                                 <span className = "text-sm text-gray-400 mr-2">
                                     {user.email?.split("@")[0]}님
                                 </span>
-                                <Link href="/profile" className="hover:texrt-gray-300 text-sm">
+                                <Link href="/profile" className="hover:text-gray-300 text-sm">
                                     프로필
                                 </Link>
                                 <button
                                     onClick={handleLogout}
-                                    className="bg-red-500 hever:bg-red-600 text-white px-3 py-1 rounded text-sm transition">
+                                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition">
                                     로그아웃
                                 </button>
                             </>
