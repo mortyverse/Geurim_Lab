@@ -70,7 +70,7 @@ export default function Header() {
             <nav className="container mx-auto px-4 py-3 flex justify-between items-center">
                 {/* 로고 - 클릭하면 메인 페이지로 이동 */}
                 <Link href="/" className="text-xl font-bold text-gray-900">
-                    Geurim Lab
+                    Grim Lab
                 </Link>
                 <div className="flex items-center gap-6">
                     {/* 좌측 메뉴: 갤러리, 작품 업로드, 포트폴리오, 1:1 피드백 */}

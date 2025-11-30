@@ -4,7 +4,7 @@ export default function Footer() {
             <div className="container mx-auto text-center">
                 {/* 현재 연도를 자동으로 표시하는 저작권 표시 */}
                 <p className="text-sm">
-                    &copy; {new Date().getFullYear()} Geurim Lab. All rights reserved.
+                    &copy; {new Date().getFullYear()} Grim Lab. All rights reserved.
                 </p>
             </div>
         </footer>
