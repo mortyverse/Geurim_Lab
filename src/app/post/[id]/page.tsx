@@ -52,7 +52,7 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
         </Link>
 
         {/* 작품 정보 */}
-        <div className="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+        <div className="bg-white rounded border border-gray-200 overflow-hidden mb-8 hover:shadow-sm transition-shadow">
           {/* 작품 이미지 */}
           <div className="w-full bg-gray-100 flex items-center justify-center">
             <img 
@@ -115,7 +115,7 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
         </div>
 
         {/* 피드백 섹션 */}
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white rounded border border-gray-200 p-6 hover:shadow-sm transition-shadow">
           <h2 className="text-xl font-bold text-gray-900 mb-4">
             피드백 {feedbacks ? `(${feedbacks.length})` : '(0)'}
           </h2>

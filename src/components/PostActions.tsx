@@ -84,14 +84,14 @@ export default function PostActions({ postId, postUserId, postTitle }: PostActio
     <div className="flex gap-3 mt-6 pt-6 border-t border-gray-200">
       <Link
         href={`/post/${postId}/edit`}
-        className="flex-1 bg-blue-600 text-white text-center font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+        className="flex-1 bg-blue-600 text-white text-center font-semibold py-2 px-4 rounded hover:bg-blue-700 transition-colors"
       >
         수정
       </Link>
       <button
         onClick={handleDelete}
         disabled={isDeleting}
-        className="flex-1 bg-red-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+        className="flex-1 bg-red-600 text-white font-semibold py-2 px-4 rounded hover:bg-red-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
       >
         {isDeleting ? '삭제 중...' : '삭제'}
       </button>

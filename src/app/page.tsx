@@ -84,7 +84,7 @@ export default function Home() {
               placeholder="작품 제목으로 검색..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
+              className="w-full px-4 py-3 pl-12 border border-gray-200 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
             />
             <svg
               className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
@@ -133,7 +133,7 @@ export default function Home() {
               <Link
                 key={post.id}
                 href={`/post/${post.id}`}
-                className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
+                className="group bg-white rounded border border-gray-200 overflow-hidden hover:shadow-sm transition-all duration-300"
               >
                 <div className="relative w-full h-64 bg-gray-200 overflow-hidden">
                   <img

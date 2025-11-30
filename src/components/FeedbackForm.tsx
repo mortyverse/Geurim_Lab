@@ -66,7 +66,7 @@ export default function FeedbackForm({ postId }: FeedbackFormProps) {
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder="이 작품에 대한 피드백을 남겨주세요..."
-        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-gray-900"
+        className="w-full px-3 py-2 border border-gray-200 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-gray-900"
         rows={4}
         disabled={isSubmitting}
       />
@@ -78,7 +78,7 @@ export default function FeedbackForm({ postId }: FeedbackFormProps) {
       <button
         type="submit"
         disabled={isSubmitting || !content.trim()}
-        className="mt-3 w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+        className="mt-3 w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
       >
         {isSubmitting ? '작성 중...' : '피드백 작성'}
       </button>

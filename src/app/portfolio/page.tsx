@@ -74,11 +74,11 @@ export default function PortfolioPage() {
         </div>
 
         {posts.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-lg shadow-md">
+          <div className="text-center py-12 bg-white rounded border border-gray-200 hover:shadow-sm transition-shadow">
             <p className="text-gray-500 text-lg mb-4">아직 업로드한 작품이 없습니다.</p>
             <Link
               href="/upload"
-              className="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded hover:bg-blue-700 transition-colors"
             >
               첫 작품 업로드하기
             </Link>
@@ -89,7 +89,7 @@ export default function PortfolioPage() {
               <Link
                 key={post.id}
                 href={`/post/${post.id}`}
-                className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                className="group bg-white rounded border border-gray-200 overflow-hidden hover:shadow-sm transition-shadow duration-300"
               >
                 <div className="relative w-full h-64 bg-gray-200">
                   <img
