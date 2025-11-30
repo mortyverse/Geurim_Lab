@@ -98,9 +98,20 @@ export default function Header() {
                         {/* 로그인된 경우 */}
                         {user ?(
                             <>
-                                <span className="text-sm text-gray-600 mr-2">
-                                    {user.email?.split("@")[0]}님
-                                </span>
+                                <div className="flex items-center gap-2 mr-2">
+                                    {userRole && (
+                                        <span className={`px-2 py-0.5 rounded text-xs font-semibold text-white ${
+                                            userRole === 'student' 
+                                                ? 'bg-blue-500' 
+                                                : 'bg-indigo-600'
+                                        }`}>
+                                            {userRole === 'student' ? '학생' : '멘토'}
+                                        </span>
+                                    )}
+                                    <span className="text-sm text-gray-600">
+                                        {user.email?.split("@")[0]}님
+                                    </span>
+                                </div>
                                 <Link href="/profile" className="text-gray-700 hover:text-gray-900 text-sm">
                                     프로필
                                 </Link>
