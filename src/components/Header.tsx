@@ -73,7 +73,7 @@ export default function Header() {
                     Geurim Lab
                 </Link>
                 <div className="flex items-center gap-6">
-                    {/* 좌측 메뉴: 갤러리, 작품 업로드, 포트폴리오 */}
+                    {/* 좌측 메뉴: 갤러리, 작품 업로드, 포트폴리오, 1:1 피드백 */}
                     <div className="flex gap-4">
                         <Link href="/gallery" className="text-gray-700 hover:text-gray-900">갤러리</Link>
                         {/* 학생 역할에게만 작품 업로드 메뉴 표시 */}
@@ -83,6 +83,10 @@ export default function Header() {
                         {/* 학생 역할에게만 포트폴리오 메뉴 표시 */}
                         {user && userRole === 'student' && (
                             <Link href="/portfolio" className="text-gray-700 hover:text-gray-900">포트폴리오</Link>
+                        )}
+                        {/* 로그인한 사용자에게 1:1 피드백 메뉴 표시 */}
+                        {user && (
+                            <Link href="/feedback" className="text-gray-700 hover:text-gray-900">1:1 피드백</Link>
                         )}
                     </div>
                     
