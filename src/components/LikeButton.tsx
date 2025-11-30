@@ -113,8 +113,8 @@ export default function LikeButton({ postId, initialLikesCount }: LikeButtonProp
       onClick={toggleLike}
       className={`flex items-center gap-2 transition-all duration-200 ${
         isLiked 
-          ? 'text-red-500 hover:text-red-600' 
-          : 'text-gray-400 hover:text-red-500'
+          ? 'text-blue-500 hover:text-blue-600' 
+          : 'text-gray-400 hover:text-blue-500'
       }`}
     >
       <svg 

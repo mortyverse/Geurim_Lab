@@ -90,7 +90,7 @@ export default function Header() {
                     <div className="h-4 w-px bg-gray-300"></div>
 
                     {/* 우측 메뉴: 로그인 상태에 따라 다르게 표시 */}
-                    <div className="flex gap-3 items-center">
+                    <div className="flex gap-2 items-center">
                         {/* 로그인된 경우 */}
                         {user ?(
                             <>
@@ -102,19 +102,21 @@ export default function Header() {
                                 </Link>
                                 <button
                                     onClick={handleLogout}
-                                    className="text-gray-700 hover:text-gray-900 text-sm font-medium">
+                                    className="border border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-1.5 rounded text-sm font-medium transition">
                                     로그아웃
                                 </button>
                             </>
                         ):(
                             <>
-                                <Link href="/login" className="text-gray-700 hover:text-gray-900 text-sm font-medium">
+                                <Link 
+                                    href="/login" 
+                                    className="border border-blue-600 text-blue-600 hover:bg-blue-50 px-4 py-1.5 rounded text-sm font-medium transition">
                                     로그인
                                 </Link>
 
                                 <Link 
                                     href="/signup"
-                                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium transition">
+                                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded text-sm font-medium transition">
                                         회원가입
                                 </Link>
                             </>
