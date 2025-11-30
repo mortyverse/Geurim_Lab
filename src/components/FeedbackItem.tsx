@@ -124,7 +124,7 @@ export default function FeedbackItem({ feedback }: FeedbackItemProps) {
                 </button>
                 <button
                   onClick={handleDelete}
-                  className="text-xs text-red-600 hover:text-red-800"
+                  className="text-xs text-gray-500 hover:text-gray-700"
                   disabled={isSubmitting}
                 >
                   삭제

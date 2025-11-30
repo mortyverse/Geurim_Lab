@@ -69,13 +69,8 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">작품 갤러리</h1>
-          <p className="text-gray-600">학생들이 업로드한 작품을 감상해보세요</p>
-        </div>
-
         {/* 검색 바 */}
         <div className="mb-8">
           <div className="relative max-w-2xl">

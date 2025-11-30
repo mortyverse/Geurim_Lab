@@ -91,7 +91,7 @@ export default function PostActions({ postId, postUserId, postTitle }: PostActio
       <button
         onClick={handleDelete}
         disabled={isDeleting}
-        className="flex-1 bg-red-600 text-white font-semibold py-2 px-4 rounded hover:bg-red-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+        className="flex-1 border border-gray-300 text-gray-700 font-semibold py-2 px-4 rounded hover:bg-gray-50 transition-colors disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
       >
         {isDeleting ? '삭제 중...' : '삭제'}
       </button>

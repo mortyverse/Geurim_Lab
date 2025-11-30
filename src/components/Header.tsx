@@ -66,55 +66,55 @@ export default function Header() {
     };
 
     return (
-        <header className="bg-gray-800 text-white p-4">
-            <nav className="container mx-auto flex justify-between items-center">
+        <header className="bg-white border-b border-gray-200">
+            <nav className="container mx-auto px-4 py-3 flex justify-between items-center">
                 {/* 로고 - 클릭하면 메인 페이지로 이동 */}
-                <Link href="/" className="text-xl font-bold">
+                <Link href="/" className="text-xl font-bold text-gray-900">
                     Geurim Lab
                 </Link>
                 <div className="flex items-center gap-6">
                     {/* 좌측 메뉴: 갤러리, 작품 업로드, 포트폴리오 */}
                     <div className="flex gap-4">
-                        <Link href="/gallery" className="hover:text-gray-300">갤러리</Link>
+                        <Link href="/gallery" className="text-gray-700 hover:text-gray-900">갤러리</Link>
                         {/* 학생 역할에게만 작품 업로드 메뉴 표시 */}
                         {user && userRole === 'student' && (
-                            <Link href="/upload" className="hover:text-gray-300">작품 업로드</Link>
+                            <Link href="/upload" className="text-gray-700 hover:text-gray-900">작품 업로드</Link>
                         )}
                         {/* 로그인한 사용자에게만 포트폴리오 메뉴 표시 */}
                         {user && (
-                            <Link href="/portfolio" className="hover:text-gray-300">포트폴리오</Link>
+                            <Link href="/portfolio" className="text-gray-700 hover:text-gray-900">포트폴리오</Link>
                         )}
                     </div>
                     
                     {/* 구분선 */}
-                    <div className="h-4 w-px bg-gray-600"></div>
+                    <div className="h-4 w-px bg-gray-300"></div>
 
                     {/* 우측 메뉴: 로그인 상태에 따라 다르게 표시 */}
-                    <div className="flex gap-4 items-center">
+                    <div className="flex gap-3 items-center">
                         {/* 로그인된 경우 */}
                         {user ?(
                             <>
-                                <span className = "text-sm text-gray-400 mr-2">
+                                <span className="text-sm text-gray-600 mr-2">
                                     {user.email?.split("@")[0]}님
                                 </span>
-                                <Link href="/profile" className="hover:text-gray-300 text-sm">
+                                <Link href="/profile" className="text-gray-700 hover:text-gray-900 text-sm">
                                     프로필
                                 </Link>
                                 <button
                                     onClick={handleLogout}
-                                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition">
+                                    className="text-gray-700 hover:text-gray-900 text-sm font-medium">
                                     로그아웃
                                 </button>
                             </>
                         ):(
                             <>
-                                <Link href="/login" className="hover:text-gray-300">
+                                <Link href="/login" className="text-gray-700 hover:text-gray-900 text-sm font-medium">
                                     로그인
                                 </Link>
 
                                 <Link 
                                     href="/signup"
-                                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">
+                                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium transition">
                                         회원가입
                                 </Link>
                             </>
