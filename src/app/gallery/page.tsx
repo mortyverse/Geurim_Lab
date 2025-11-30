@@ -43,24 +43,29 @@ export default async function GalleryPage() {
               <Link
                 key={post.id}
                 href={`/post/${post.id}`}
-                className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
               >
-                <div className="relative w-full h-64 bg-gray-200">
+                <div className="relative w-full h-64 bg-gray-200 overflow-hidden">
                   <img
                     src={post.image_url}
                     alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  {/* 좋아요/조회수 오버레이 */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
-                    <div className="flex items-center gap-4 text-white text-sm">
-                      <div className="flex items-center gap-1">
-                        <span>❤️</span>
-                        <span>{post.likes_count || 0}</span>
+                  {/* 호버 시 나타나는 좋아요/조회수 오버레이 */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300">
+                    <div className="absolute bottom-4 right-4 flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="flex items-center gap-1.5 text-white">
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                        </svg>
+                        <span className="font-semibold">{post.likes_count || 0}</span>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <span>👁️</span>
-                        <span>{post.views_count || 0}</span>
+                      <div className="flex items-center gap-1.5 text-white">
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                          <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                        </svg>
+                        <span className="font-semibold">{post.views_count || 0}</span>
                       </div>
                     </div>
                   </div>
