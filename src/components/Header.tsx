@@ -80,8 +80,8 @@ export default function Header() {
                         {user && userRole === 'student' && (
                             <Link href="/upload" className="text-gray-700 hover:text-gray-900">작품 업로드</Link>
                         )}
-                        {/* 로그인한 사용자에게만 포트폴리오 메뉴 표시 */}
-                        {user && (
+                        {/* 학생 역할에게만 포트폴리오 메뉴 표시 */}
+                        {user && userRole === 'student' && (
                             <Link href="/portfolio" className="text-gray-700 hover:text-gray-900">포트폴리오</Link>
                         )}
                     </div>
