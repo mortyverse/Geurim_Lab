@@ -58,9 +58,9 @@ export default function UploadPage() {
         return;
       }
 
-      // 파일 크기 검증 (10MB 제한)
-      if (file.size > 10 * 1024 * 1024) {
-        alert('파일 크기는 10MB를 초과할 수 없습니다.');
+      // 파일 크기 검증 (20MB 제한)
+      if (file.size > 20 * 1024 * 1024) {
+        alert('파일 크기는 20MB를 초과할 수 없습니다.');
         return;
       }
 

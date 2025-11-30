@@ -55,9 +55,9 @@ export default function NewFeedbackRequestPage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // 파일 크기 체크 (10MB)
-    if (file.size > 10 * 1024 * 1024) {
-      alert('파일 크기는 10MB 이하여야 합니다.');
+    // 파일 크기 체크 (20MB)
+    if (file.size > 20 * 1024 * 1024) {
+      alert('파일 크기는 20MB 이하여야 합니다.');
       return;
     }
 
