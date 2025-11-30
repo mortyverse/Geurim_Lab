@@ -66,18 +66,30 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
           <div className="p-6">
             <h1 className="text-3xl font-bold text-gray-900 mb-4">{post.title}</h1>
             
-            {/* 작성자 정보 */}
-            <div className="flex items-center gap-3 mb-6 pb-6 border-b border-gray-200">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                <span className="text-blue-600 font-semibold text-lg">
-                  {post.user?.name?.charAt(0) || '?'}
-                </span>
+            {/* 작성자 정보 + 좋아요/조회수 */}
+            <div className="flex items-center justify-between mb-6 pb-6 border-b border-gray-200">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                  <span className="text-blue-600 font-semibold text-lg">
+                    {post.user?.name?.charAt(0) || '?'}
+                  </span>
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-900">{post.user?.name || '알 수 없음'}</p>
+                  <p className="text-sm text-gray-500">
+                    {post.user?.role === 'student' ? '학생' : '멘토'}
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="font-semibold text-gray-900">{post.user?.name || '알 수 없음'}</p>
-                <p className="text-sm text-gray-500">
-                  {post.user?.role === 'student' ? '학생' : '멘토'}
-                </p>
+              <div className="flex items-center gap-4">
+                <LikeButton postId={post.id} initialLikesCount={post.likes_count || 0} />
+                <div className="flex items-center gap-1.5 text-gray-400">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                    <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                  </svg>
+                  <span className="font-semibold text-lg">{post.views_count || 0}</span>
+                </div>
               </div>
             </div>
 
@@ -99,11 +111,6 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
                 minute: '2-digit'
               })}
             </p>
-
-            {/* 좋아요 버튼 */}
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <LikeButton postId={post.id} initialLikesCount={post.likes_count || 0} />
-            </div>
 
             {/* 수정/삭제 버튼 (본인 작품인 경우만 표시) */}
             <PostActions 
