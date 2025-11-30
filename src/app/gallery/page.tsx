@@ -1,29 +1,73 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
+import { useEffect, useState } from 'react';
 
-export default async function GalleryPage() {
-  // posts 테이블에서 작품 목록 조회 (최신순)
-  const { data: posts, error } = await supabase
-    .from('posts')
-    .select(`
-      id,
-      title,
-      description,
-      image_url,
-      created_at,
-      likes_count,
-      views_count,
-      users (
-        name,
-        role
-      )
-    `)
-    .order('created_at', { ascending: false });
+interface Post {
+  id: number;
+  title: string;
+  description: string;
+  image_url: string;
+  created_at: string;
+  likes_count: number;
+  views_count: number;
+  users: Array<{ name: string; role: string }>;
+}
 
-  if (error) {
-    console.error('작품 목록 조회 오류:', error);
-  }
+export default function GalleryPage() {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setFilteredPosts(posts);
+    } else {
+      const filtered = posts.filter(post =>
+        post.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredPosts(filtered);
+    }
+  }, [searchQuery, posts]);
+
+  const fetchPosts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('posts')
+        .select(`
+          id,
+          title,
+          description,
+          image_url,
+          created_at,
+          likes_count,
+          views_count,
+          users (
+            name,
+            role
+          )
+        `)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('작품 목록 조회 오류:', error);
+      } else {
+        setPosts(data || []);
+        setFilteredPosts(data || []);
+      }
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -33,13 +77,60 @@ export default async function GalleryPage() {
           <p className="text-gray-600">학생들이 업로드한 작품을 감상해보세요</p>
         </div>
 
-        {!posts || posts.length === 0 ? (
+        {/* 검색 바 */}
+        <div className="mb-8">
+          <div className="relative max-w-2xl">
+            <input
+              type="text"
+              placeholder="작품 제목으로 검색..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
+            />
+            <svg
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </div>
+          {searchQuery && (
+            <p className="mt-2 text-sm text-gray-600">
+              "{searchQuery}" 검색 결과: {filteredPosts.length}개
+            </p>
+          )}
+        </div>
+
+        {loading ? (
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">아직 업로드된 작품이 없습니다.</p>
+            <p className="text-gray-500 text-lg">로딩 중...</p>
+          </div>
+        ) : !filteredPosts || filteredPosts.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500 text-lg">
+              {searchQuery ? '검색 결과가 없습니다.' : '아직 업로드된 작품이 없습니다.'}
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {posts.map((post) => (
+            {filteredPosts.map((post) => (
               <Link
                 key={post.id}
                 href={`/post/${post.id}`}
