@@ -12,6 +12,8 @@ export default async function GalleryPage() {
       description,
       image_url,
       created_at,
+      likes_count,
+      views_count,
       users (
         name,
         role
@@ -49,6 +51,19 @@ export default async function GalleryPage() {
                     alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
+                  {/* 좋아요/조회수 오버레이 */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                    <div className="flex items-center gap-4 text-white text-sm">
+                      <div className="flex items-center gap-1">
+                        <span>❤️</span>
+                        <span>{post.likes_count || 0}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span>👁️</span>
+                        <span>{post.views_count || 0}</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className="p-4">
                   <h2 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1">

@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import FeedbackForm from '@/components/FeedbackForm';
 import FeedbackItem from '@/components/FeedbackItem';
 import PostActions from '@/components/PostActions';
+import LikeButton from '@/components/LikeButton';
+import ViewTracker from '@/components/ViewTracker';
 
 export default async function PostDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -34,6 +36,9 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
+      {/* 조회수 추적 */}
+      <ViewTracker postId={post.id} />
+      
       <div className="max-w-4xl mx-auto px-4">
         {/* 뒤로 가기 버튼 */}
         <Link 
@@ -94,6 +99,11 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
                 minute: '2-digit'
               })}
             </p>
+
+            {/* 좋아요 버튼 */}
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              <LikeButton postId={post.id} initialLikesCount={post.likes_count || 0} />
+            </div>
 
             {/* 수정/삭제 버튼 (본인 작품인 경우만 표시) */}
             <PostActions 
