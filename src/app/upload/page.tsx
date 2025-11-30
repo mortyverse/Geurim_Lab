@@ -102,10 +102,10 @@ export default function UploadPage() {
         throw new Error('User not logged in');
       }
 
-      // 1. 이미지 파일명 생성 (timestamp_originalFileName)
+      // 1. 이미지 파일명 생성 (timestamp.확장자)
       const timestamp = Date.now();
-      const fileExt = imageFile.name.split('.').pop();
-      const fileName = `${timestamp}_${imageFile.name}`;
+      const fileExt = imageFile.name.split('.').pop()?.toLowerCase() || 'jpg';
+      const fileName = `${timestamp}.${fileExt}`;
 
       // 2. Supabase Storage에 이미지 업로드
       const { data: uploadData, error: uploadError } = await supabase.storage

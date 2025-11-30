@@ -116,8 +116,9 @@ export default function NewFeedbackRequestPage() {
         return;
       }
 
-      // 이미지 업로드
-      const fileName = `${user.id}/${Date.now()}_${imageFile.name}`;
+      // 이미지 업로드 (파일명: userId/timestamp.확장자)
+      const fileExt = imageFile.name.split('.').pop()?.toLowerCase() || 'jpg';
+      const fileName = `${user.id}/${Date.now()}.${fileExt}`;
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from('one-on-one-feedbacks')
         .upload(fileName, imageFile, {
