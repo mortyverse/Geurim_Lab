@@ -154,7 +154,7 @@ export default function UploadPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         <div className="bg-white border border-gray-200 rounded p-8 hover:shadow-sm transition-shadow">
           <h1 className="text-3xl font-bold text-gray-900 mb-6">작품 업로드</h1>
