@@ -154,9 +154,9 @@ export default function UploadPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
-        <div className="bg-white shadow-md rounded-lg p-8">
+        <div className="bg-white border border-gray-200 rounded p-8 hover:shadow-sm transition-shadow">
           <h1 className="text-3xl font-bold text-gray-900 mb-6">작품 업로드</h1>
           
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -170,7 +170,7 @@ export default function UploadPage() {
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                className="w-full px-4 py-2 border border-gray-200 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-400"
                 placeholder="작품의 제목을 입력하세요"
                 required
               />
@@ -186,7 +186,7 @@ export default function UploadPage() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={4}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                className="w-full px-4 py-2 border border-gray-200 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-400"
                 placeholder="작품에 대한 설명을 입력하세요 (선택사항)"
               />
             </div>
@@ -201,7 +201,7 @@ export default function UploadPage() {
                 id="image"
                 accept="image/*"
                 onChange={handleFileChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-200 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
               />
               <p className="mt-1 text-sm text-gray-500">
@@ -213,7 +213,7 @@ export default function UploadPage() {
             {previewUrl && (
               <div>
                 <p className="block text-sm font-semibold text-gray-900 mb-2">미리보기</p>
-                <div className="border border-gray-300 rounded-md overflow-hidden">
+                <div className="border border-gray-200 rounded overflow-hidden">
                   <img
                     src={previewUrl}
                     alt="미리보기"
@@ -228,14 +228,14 @@ export default function UploadPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed font-medium transition"
+                className="flex-1 bg-blue-600 text-white py-3 px-6 rounded hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed font-medium transition"
               >
                 {loading ? '업로드 중...' : '작품 업로드'}
               </button>
               <button
                 type="button"
                 onClick={() => router.push('/')}
-                className="px-6 py-3 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 font-medium transition"
+                className="px-6 py-3 border border-gray-200 rounded text-gray-700 hover:bg-gray-50 font-medium transition"
               >
                 취소
               </button>

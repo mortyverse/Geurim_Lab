@@ -129,7 +129,7 @@ export default function ProfilePage() {
       <h1 className="text-3xl font-bold mb-6">프로필</h1>
       
       {/* 사용자 정보 표시 */}
-      <div className="bg-white rounded-lg shadow p-6 mb-6">
+      <div className="bg-white rounded border border-gray-200 p-6 mb-6 hover:shadow-sm transition-shadow">
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-600 mb-1">이름</label>
           <p className="text-xl font-semibold text-gray-900">{user.name}</p>
@@ -161,18 +161,18 @@ export default function ProfilePage() {
 
       {/* 멘토 인증 서류 업로드 UI */}
       {user.role === 'mentor' && !user.is_verified && (
-        <div className="bg-white border border-gray-200 rounded-lg shadow p-6">
+        <div className="bg-white border border-gray-200 rounded p-6 hover:shadow-sm transition-shadow">
           <h2 className="text-xl font-bold mb-4 text-gray-900">멘토 인증</h2>
           
           {verificationStatus === 'pending' ? (
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div className="bg-blue-50 border border-blue-200 rounded p-4">
               <p className="text-blue-800 font-semibold mb-2">✓ 인증 서류 제출 완료</p>
               <p className="text-sm text-blue-700">
                 관리자 검토 중입니다. 승인까지 1-3일 정도 소요될 수 있습니다.
               </p>
             </div>
           ) : verificationStatus === 'rejected' ? (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+            <div className="bg-red-50 border border-red-200 rounded p-4 mb-4">
               <p className="text-red-800 font-semibold mb-2">✗ 인증이 거부되었습니다</p>
               <p className="text-sm text-red-700 mb-4">
                 서류를 다시 확인하고 재제출해주세요.
@@ -197,7 +197,7 @@ export default function ProfilePage() {
                 <button
                   onClick={handleVerificationUpload}
                   disabled={uploading || !verificationFile}
-                  className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  className="w-full bg-blue-600 text-white font-semibold py-3 rounded hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >
                   {uploading ? '업로드 중...' : '재제출'}
                 </button>
@@ -236,7 +236,7 @@ export default function ProfilePage() {
                 <button
                   onClick={handleVerificationUpload}
                   disabled={uploading || !verificationFile}
-                  className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  className="w-full bg-blue-600 text-white font-semibold py-3 rounded hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >
                   {uploading ? '업로드 중...' : '제출하기'}
                 </button>

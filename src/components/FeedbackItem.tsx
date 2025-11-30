@@ -124,7 +124,7 @@ export default function FeedbackItem({ feedback }: FeedbackItemProps) {
                 </button>
                 <button
                   onClick={handleDelete}
-                  className="text-xs text-red-600 hover:text-red-800"
+                  className="text-xs text-gray-500 hover:text-gray-700"
                   disabled={isSubmitting}
                 >
                   삭제
@@ -139,7 +139,7 @@ export default function FeedbackItem({ feedback }: FeedbackItemProps) {
               <textarea
                 value={editedContent}
                 onChange={(e) => setEditedContent(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-gray-900 text-sm"
+                className="w-full px-3 py-2 border border-gray-200 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-gray-900 text-sm"
                 rows={3}
                 disabled={isSubmitting}
               />
