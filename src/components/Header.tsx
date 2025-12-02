@@ -15,37 +15,19 @@ export default function Header() {
         const getUser = async () => {
             const { data: { user: currentUser } } = await supabase.auth.getUser();
             setUser(currentUser);
-            
-            if (currentUser) {
-                const { data: userData } = await supabase
-                    .from('users')
-                    .select('role')
-                    .eq('id', currentUser.id)
-                    .single();
-                setUserRole(userData?.role ?? null);
-            } else {
-                setUserRole(null);
-            }
+            // user_metadata에서 role 가져오기 (DB 쿼리 없음)
+            setUserRole(currentUser?.user_metadata?.role ?? null);
         };
         getUser();
 
-        // onAuthStateChange 리스너 임시 비활성화 (테스트용)
-        // const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
-        //     setUser(session?.user ?? null);
-        //     
-        //     if (session?.user) {
-        //         const { data: userData } = await supabase
-        //             .from('users')
-        //             .select('role')
-        //             .eq('id', session.user.id)
-        //             .single();
-        //         setUserRole(userData?.role ?? null);
-        //     } else {
-        //         setUserRole(null);
-        //     }
-        // }); 
+        // 인증 상태 변화 감지 (DB 쿼리 없이 user_metadata 사용)
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setUser(session?.user ?? null);
+            // user_metadata에서 role 가져오기 (DB 쿼리 없음 - 충돌 방지)
+            setUserRole(session?.user?.user_metadata?.role ?? null);
+        }); 
 
-        // return () => subscription.unsubscribe();
+        return () => subscription.unsubscribe();
     }, []);
 
     // "로그아웃" 버튼을 눌렀을 때 실행되는 함수
