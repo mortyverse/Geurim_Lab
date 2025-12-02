@@ -37,7 +37,9 @@ export default function Home() {
   }, [searchQuery, posts]);
 
   const fetchPosts = async () => {
+    console.log('[DEBUG] fetchPosts 시작');
     try {
+      console.log('[DEBUG] Supabase 쿼리 시작');
       const { data, error } = await supabase
         .from('posts')
         .select(`
@@ -55,6 +57,8 @@ export default function Home() {
         `)
         .order('created_at', { ascending: false });
 
+      console.log('[DEBUG] Supabase 쿼리 완료', { dataLength: data?.length, error });
+
       if (error) {
         console.error('작품 목록 조회 오류:', error);
       } else {
@@ -62,8 +66,9 @@ export default function Home() {
         setFilteredPosts(data || []);
       }
     } catch (error) {
-      console.error('Error fetching posts:', error);
+      console.error('[DEBUG] fetchPosts 예외 발생:', error);
     } finally {
+      console.log('[DEBUG] setLoading(false) 호출');
       setLoading(false);
     }
   };
