@@ -1,16 +1,55 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/lib/supabase";
+import { User } from "@supabase/supabase-js";
 
 export default function Header() {
     const router = useRouter();
-    const { user, userProfile, signOut } = useAuth();
+    const [user, setUser] = useState<User | null>(null);
+    const [userRole, setUserRole] = useState<string | null>(null);
+
+    useEffect(() => {
+        const getUser = async () => {
+            const { data: { user: currentUser } } = await supabase.auth.getUser();
+            setUser(currentUser);
+            
+            if (currentUser) {
+                const { data: userData } = await supabase
+                    .from('users')
+                    .select('role')
+                    .eq('id', currentUser.id)
+                    .single();
+                setUserRole(userData?.role ?? null);
+            } else {
+                setUserRole(null);
+            }
+        };
+        getUser();
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+            setUser(session?.user ?? null);
+            
+            if (session?.user) {
+                const { data: userData } = await supabase
+                    .from('users')
+                    .select('role')
+                    .eq('id', session.user.id)
+                    .single();
+                setUserRole(userData?.role ?? null);
+            } else {
+                setUserRole(null);
+            }
+        }); 
+
+        return () => subscription.unsubscribe();
+    }, []);
 
     // "로그아웃" 버튼을 눌렀을 때 실행되는 함수
     const handleLogout = async () => {
-        await signOut();
+        await supabase.auth.signOut();
         alert("로그아웃 되었습니다.");
         router.push("/");
     };
@@ -27,11 +66,11 @@ export default function Header() {
                     <div className="flex gap-4">
                         <Link href="/gallery" className="text-gray-700 hover:text-gray-900">갤러리</Link>
                         {/* 학생 역할에게만 작품 업로드 메뉴 표시 */}
-                        {user && userProfile?.role === 'student' && (
+                        {user && userRole === 'student' && (
                             <Link href="/upload" className="text-gray-700 hover:text-gray-900">작품 업로드</Link>
                         )}
                         {/* 학생 역할에게만 포트폴리오 메뉴 표시 */}
-                        {user && userProfile?.role === 'student' && (
+                        {user && userRole === 'student' && (
                             <Link href="/portfolio" className="text-gray-700 hover:text-gray-900">포트폴리오</Link>
                         )}
                         {/* 로그인한 사용자에게 1:1 피드백 메뉴 표시 */}
@@ -49,13 +88,13 @@ export default function Header() {
                         {user ?(
                             <>
                                 <div className="flex items-center gap-2 mr-2">
-                                    {userProfile?.role && (
+                                    {userRole && (
                                         <span className={`px-2 py-0.5 rounded text-xs font-semibold text-white ${
-                                            userProfile.role === 'student' 
+                                            userRole === 'student' 
                                                 ? 'bg-blue-500' 
                                                 : 'bg-indigo-600'
                                         }`}>
-                                            {userProfile.role === 'student' ? '학생' : '멘토'}
+                                            {userRole === 'student' ? '학생' : '멘토'}
                                         </span>
                                     )}
                                     <span className="text-sm text-gray-600">
