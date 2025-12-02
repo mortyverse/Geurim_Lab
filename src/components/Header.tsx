@@ -6,7 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 export default function Header() {
     const router = useRouter();
-    const { user, userProfile, loading, signOut } = useAuth();
+    const { user, userProfile, signOut } = useAuth();
 
     // "로그아웃" 버튼을 눌렀을 때 실행되는 함수
     const handleLogout = async () => {
@@ -14,25 +14,6 @@ export default function Header() {
         alert("로그아웃 되었습니다.");
         router.push("/");
     };
-
-    // 로딩 중일 때는 간단한 스켈레톤 표시
-    if (loading) {
-        return (
-            <header className="bg-white border-b border-gray-200">
-                <nav className="container mx-auto px-4 py-3 flex justify-between items-center">
-                    <Link href="/" className="text-xl font-bold text-gray-900">
-                        Grim Lab
-                    </Link>
-                    <div className="flex items-center gap-6">
-                        <div className="animate-pulse flex gap-4">
-                            <div className="h-4 w-16 bg-gray-200 rounded"></div>
-                            <div className="h-4 w-16 bg-gray-200 rounded"></div>
-                        </div>
-                    </div>
-                </nav>
-            </header>
-        );
-    }
 
     return (
         <header className="bg-white border-b border-gray-200">
