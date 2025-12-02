@@ -19,9 +19,5 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     autoRefreshToken: true,
     // URL에서 세션 감지 (OAuth 콜백 등)
     detectSessionInUrl: true,
-    // 스토리지 키 명시적 설정
-    storageKey: 'sb-auth-token',
-    // 플로우 타입 설정 (PKCE 사용)
-    flowType: 'pkce',
   },
 });
