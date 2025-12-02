@@ -29,22 +29,23 @@ export default function Header() {
         };
         getUser();
 
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
-            setUser(session?.user ?? null);
-            
-            if (session?.user) {
-                const { data: userData } = await supabase
-                    .from('users')
-                    .select('role')
-                    .eq('id', session.user.id)
-                    .single();
-                setUserRole(userData?.role ?? null);
-            } else {
-                setUserRole(null);
-            }
-        }); 
+        // onAuthStateChange 리스너 임시 비활성화 (테스트용)
+        // const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+        //     setUser(session?.user ?? null);
+        //     
+        //     if (session?.user) {
+        //         const { data: userData } = await supabase
+        //             .from('users')
+        //             .select('role')
+        //             .eq('id', session.user.id)
+        //             .single();
+        //         setUserRole(userData?.role ?? null);
+        //     } else {
+        //         setUserRole(null);
+        //     }
+        // }); 
 
-        return () => subscription.unsubscribe();
+        // return () => subscription.unsubscribe();
     }, []);
 
     // "로그아웃" 버튼을 눌렀을 때 실행되는 함수
