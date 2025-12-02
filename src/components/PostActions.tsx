@@ -19,10 +19,10 @@ export default function PostActions({ postId, postUserId, postTitle }: PostActio
 
   useEffect(() => {
     const fetchSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const { data: { user } } = await supabase.auth.getUser();
       
-      if (session) {
-        setCurrentUserId(session.user.id);
+      if (user) {
+        setCurrentUserId(user.id);
       }
       setLoading(false);
     };

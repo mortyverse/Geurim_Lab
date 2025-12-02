@@ -22,9 +22,9 @@ export default function ProfilePage() {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
       
-      if (!session) {
+      if (authError || !authUser) {
         router.push('/login');
         return;
       }
@@ -33,7 +33,7 @@ export default function ProfilePage() {
       const { data, error } = await supabase
         .from('users')
         .select('*')
-        .eq('id', session.user.id)
+        .eq('id', authUser.id)
         .single();
 
       if (error) {

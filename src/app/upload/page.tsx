@@ -19,15 +19,14 @@ export default function UploadPage() {
   useEffect(() => {
     const checkUser = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
-        const user = session?.user;
+        const { data: { user: currentUser }, error } = await supabase.auth.getUser();
         
-        if (!user) {
+        if (error || !currentUser) {
           router.replace('/login');
           return;
         }
 
-        const role = user.user_metadata?.role;
+        const role = currentUser.user_metadata?.role;
 
         if (role !== 'student') {
           alert('학생 계정만 작품을 업로드할 수 있습니다.');
@@ -35,7 +34,7 @@ export default function UploadPage() {
           return;
         }
 
-        setUser(user);
+        setUser(currentUser);
         setUserRole(role);
       } catch (error) {
         console.error('User check error:', error);
@@ -46,7 +45,7 @@ export default function UploadPage() {
     };
 
     checkUser();
-  }, []);
+  }, [router]);
 
   // 이미지 파일 선택 핸들러
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,11 +91,10 @@ export default function UploadPage() {
     setLoading(true);
 
     try {
-      // 현재 세션 다시 확인
-      const { data: { session } } = await supabase.auth.getSession();
-      const currentUser = session?.user;
+      // 현재 사용자 다시 확인
+      const { data: { user: currentUser }, error: authError } = await supabase.auth.getUser();
 
-      if (!currentUser) {
+      if (authError || !currentUser) {
         alert('로그인이 필요합니다.');
         router.replace('/login');
         throw new Error('User not logged in');

@@ -15,9 +15,9 @@ export default function PortfolioPage() {
     const fetchMyPosts = async () => {
       try {
         // 현재 로그인한 사용자 확인
-        const { data: { session } } = await supabase.auth.getSession();
+        const { data: { user } } = await supabase.auth.getUser();
         
-        if (!session) {
+        if (!user) {
           router.push('/login');
           return;
         }
@@ -26,7 +26,7 @@ export default function PortfolioPage() {
         const { data: userData } = await supabase
           .from('users')
           .select('name')
-          .eq('id', session.user.id)
+          .eq('id', user.id)
           .single();
         
         if (userData) {
@@ -37,7 +37,7 @@ export default function PortfolioPage() {
         const { data: myPosts, error } = await supabase
           .from('posts')
           .select('*')
-          .eq('user_id', session.user.id)
+          .eq('user_id', user.id)
           .order('created_at', { ascending: false });
 
         if (error) {

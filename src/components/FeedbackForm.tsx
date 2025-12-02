@@ -27,9 +27,9 @@ export default function FeedbackForm({ postId }: FeedbackFormProps) {
 
     try {
       // 현재 로그인된 사용자 확인
-      const { data: { session } } = await supabase.auth.getSession();
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
       
-      if (!session) {
+      if (authError || !user) {
         setError('로그인이 필요합니다.');
         setIsSubmitting(false);
         return;
@@ -41,7 +41,7 @@ export default function FeedbackForm({ postId }: FeedbackFormProps) {
         .insert({
           content: content.trim(),
           post_id: postId,
-          user_id: session.user.id
+          user_id: user.id
         });
 
       if (insertError) {

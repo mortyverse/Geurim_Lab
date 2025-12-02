@@ -27,8 +27,8 @@ export default function FeedbackItem({ feedback }: FeedbackItemProps) {
 
   useEffect(() => {
     const getCurrentUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setCurrentUserId(session?.user?.id);
+      const { data: { user } } = await supabase.auth.getUser();
+      setCurrentUserId(user?.id);
     };
     getCurrentUser();
   }, []);

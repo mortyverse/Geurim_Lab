@@ -20,8 +20,8 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
       setPostId(resolvedParams.id);
 
       // 로그인 확인
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
         alert('로그인이 필요합니다.');
         router.push('/login');
         return;
@@ -41,7 +41,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
       }
 
       // 본인 작품인지 확인
-      if (post.user_id !== session.user.id) {
+      if (post.user_id !== user.id) {
         alert('본인의 작품만 수정할 수 있습니다.');
         router.push(`/post/${resolvedParams.id}`);
         return;

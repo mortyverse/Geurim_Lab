@@ -1,69 +1,38 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
-import { User } from "@supabase/supabase-js";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Header() {
     const router = useRouter();
-
-    // 로그인한 사용자 정보를 기억하는 상태 변수
-    // <User | null> : User 타입이거나 null일 수 있다는 의미 기본값은 null
-    const [user, setUser] = useState<User | null>(null);
-    const [userRole, setUserRole] = useState<string | null>(null);
-
-    // 컴포넌트가 처음 화면에 나타날 때 실행되는 로직
-    useEffect(() => {
-        // 현재 로그인된 사용자 정보를 가져오는 함수
-        const getUser = async () => {
-            const { data: { session} } = await supabase.auth.getSession();
-            setUser(session?.user ?? null);
-            
-            // 사용자가 로그인된 경우 역할 정보 조회
-            if (session?.user) {
-                const { data: userData, error } = await supabase
-                    .from('users')
-                    .select('role')
-                    .eq('id', session.user.id)
-                    .single();
-                console.log('User Role Data:', userData, 'Error:', error); // 디버깅
-                setUserRole(userData?.role ?? null);
-            } else {
-                setUserRole(null);
-            }
-        };
-        getUser();
-
-        // 로그인/로그아웃 상태가 변경될 때마다 user 상태를 업데이트
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
-            setUser(session?.user ?? null);
-            
-            // 사용자가 로그인된 경우 역할 정보 조회
-            if (session?.user) {
-                const { data: userData, error } = await supabase
-                    .from('users')
-                    .select('role')
-                    .eq('id', session.user.id)
-                    .single();
-                console.log('User Role Data (Auth Change):', userData, 'Error:', error); // 디버깅
-                setUserRole(userData?.role ?? null);
-            } else {
-                setUserRole(null);
-            }
-        }); 
-
-        // 컴포넌트가 사라질 때 구독 해제 (메모리 누수 방지)
-        return () => subscription.unsubscribe();
-    }, []);
+    const { user, userProfile, loading, signOut } = useAuth();
 
     // "로그아웃" 버튼을 눌렀을 때 실행되는 함수
     const handleLogout = async () => {
-        await supabase.auth.signOut();
+        await signOut();
         alert("로그아웃 되었습니다.");
         router.push("/");
     };
+
+    // 로딩 중일 때는 간단한 스켈레톤 표시
+    if (loading) {
+        return (
+            <header className="bg-white border-b border-gray-200">
+                <nav className="container mx-auto px-4 py-3 flex justify-between items-center">
+                    <Link href="/" className="text-xl font-bold text-gray-900">
+                        Grim Lab
+                    </Link>
+                    <div className="flex items-center gap-6">
+                        <div className="animate-pulse flex gap-4">
+                            <div className="h-4 w-16 bg-gray-200 rounded"></div>
+                            <div className="h-4 w-16 bg-gray-200 rounded"></div>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+        );
+    }
 
     return (
         <header className="bg-white border-b border-gray-200">
@@ -77,11 +46,11 @@ export default function Header() {
                     <div className="flex gap-4">
                         <Link href="/gallery" className="text-gray-700 hover:text-gray-900">갤러리</Link>
                         {/* 학생 역할에게만 작품 업로드 메뉴 표시 */}
-                        {user && userRole === 'student' && (
+                        {user && userProfile?.role === 'student' && (
                             <Link href="/upload" className="text-gray-700 hover:text-gray-900">작품 업로드</Link>
                         )}
                         {/* 학생 역할에게만 포트폴리오 메뉴 표시 */}
-                        {user && userRole === 'student' && (
+                        {user && userProfile?.role === 'student' && (
                             <Link href="/portfolio" className="text-gray-700 hover:text-gray-900">포트폴리오</Link>
                         )}
                         {/* 로그인한 사용자에게 1:1 피드백 메뉴 표시 */}
@@ -99,13 +68,13 @@ export default function Header() {
                         {user ?(
                             <>
                                 <div className="flex items-center gap-2 mr-2">
-                                    {userRole && (
+                                    {userProfile?.role && (
                                         <span className={`px-2 py-0.5 rounded text-xs font-semibold text-white ${
-                                            userRole === 'student' 
+                                            userProfile.role === 'student' 
                                                 ? 'bg-blue-500' 
                                                 : 'bg-indigo-600'
                                         }`}>
-                                            {userRole === 'student' ? '학생' : '멘토'}
+                                            {userProfile.role === 'student' ? '학생' : '멘토'}
                                         </span>
                                     )}
                                     <span className="text-sm text-gray-600">

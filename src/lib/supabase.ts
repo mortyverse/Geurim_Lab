@@ -11,4 +11,17 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 // 3. Supabase 클라이언트를 생성하여 export함.
 // 이를 통해 다른 파일에서 "import { supabase } from 'src/lib/supabase'" 형태로 사용할 수 있음
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    // 세션을 localStorage에 지속적으로 저장
+    persistSession: true,
+    // 토큰 자동 갱신 활성화
+    autoRefreshToken: true,
+    // URL에서 세션 감지 (OAuth 콜백 등)
+    detectSessionInUrl: true,
+    // 스토리지 키 명시적 설정
+    storageKey: 'sb-auth-token',
+    // 플로우 타입 설정 (PKCE 사용)
+    flowType: 'pkce',
+  },
+});
