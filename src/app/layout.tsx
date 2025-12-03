@@ -4,7 +4,6 @@ import "./globals.css";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-// import { AuthProvider } from "@/contexts/AuthContext"; // 테스트를 위해 임시 비활성화
 
 
 const geistSans = Geist({
@@ -32,7 +31,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-white`}
       >
-        {/* AuthProvider 테스트를 위해 임시 비활성화 */}
         <Header />
         <main className="flex-grow container mx-auto px-4 py-8">{children}</main>
         <Footer />
